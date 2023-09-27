@@ -106,3 +106,15 @@ variable "rds_master_password" {
   type        = string
   description = "Password for RDS"
 }
+
+variable "ecr_name" {
+  type = string
+  description = "Name of the ECR"
+  default = "sgecr"
+}
+
+variable "ecr_name2" {
+  type = string
+  description = "Name of the ECR"
+  default = "sgecr2"
+}
