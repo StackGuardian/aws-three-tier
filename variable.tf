@@ -45,6 +45,11 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
+variable "public_key" {
+  type = string
+  description = "Public key to be associated with EC2 instance"
+}
+
 variable "root_block_size_ebs" {
   type        = string
   description = "Root block size for EBS"

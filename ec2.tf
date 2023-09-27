@@ -1,7 +1,7 @@
 #Key Pair for the EC2 access
 resource "aws_key_pair" "devops-key" {
   key_name   = "${var.project_name}-${var.env}-devops"
-  public_key = "ssh-rsa XXXXXXXXXXXXXXXXXXX== PUBLIC-KEY@example.com"
+  public_key = var.public_key
 }
 
 #Retriving AMI for the EC2
