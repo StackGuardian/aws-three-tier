@@ -56,10 +56,10 @@ variable "root_block_size_ebs" {
   default     = "20"
 }
 
-variable "create_rds" {
+/* variable "create_rds" {
   description = "Whether to create RDS or not"
   default     = true
-}
+} */
 
 variable "allowed_cidr_rds" {
   type        = list(string)

@@ -61,6 +61,7 @@ resource "aws_security_group" "ec2-sc" {
 }
 #EC2 instance 
 resource "aws_instance" "ec2-instance" {
+  count = 5
   ami           = data.aws_ami.ubuntu-22-04lts.id
   instance_type = var.instance_type
   key_name      = "${var.project_name}-${var.env}-devops"
@@ -71,20 +72,20 @@ resource "aws_instance" "ec2-instance" {
     volume_type = "gp2"
     volume_size = var.root_block_size_ebs
     tags = {
-      Name       = "${var.project_name}-${var.env} EBS"
+      Name       = "${var.project_name}-${var.env}-${count.index} EBS"
       Project    = var.project_name
       Enviroment = var.env
     }
   }
   tags = {
-    Name       = "${var.project_name}-${var.env}"
+    Name       = "${var.project_name}-${var.env}-${count.index}"
     Project    = var.project_name
     Enviroment = var.env
   }
 }
 
 #ElasticIP
-resource "aws_eip" "ec2-eip" {
+/* resource "aws_eip" "ec2-eip" {
   vpc = true
   tags = {
     Name       = "${var.project_name}-${var.env}-EIP"
@@ -103,4 +104,4 @@ resource "aws_eip_association" "ec2-eip-asso" {
 # Public IP of EC2
 output "elastic_ip" {
   value = aws_eip.ec2-eip.public_ip
-}
+} */

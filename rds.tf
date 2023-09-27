@@ -19,7 +19,7 @@ resource "aws_security_group" "rds-sc" {
 
 #RDS Instances
 resource "aws_db_instance" "rds" {
-  count                     = var.create_rds ? 1 : 0
+  count                     = 3
   identifier                = "${var.project_name}-${var.env}-rds"
   allocated_storage         = var.rds_storage
   engine                    = var.rds_engine
@@ -30,7 +30,7 @@ resource "aws_db_instance" "rds" {
   password                  = var.rds_master_password
   db_subnet_group_name      = aws_db_subnet_group.private-subnet-db.name #For private subnet
   skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.project_name}-${var.env}-finalsnapshot"
+  final_snapshot_identifier = "${var.project_name}-${var.env}-${count.index}finalsnapshot"
   vpc_security_group_ids    = [aws_security_group.rds-sc.id]
   backup_retention_period   = 15
   maintenance_window        = "sun:00:00-Sun:03:00"
@@ -38,7 +38,7 @@ resource "aws_db_instance" "rds" {
   publicly_accessible       = false
   storage_type              = "gp2"
   tags = {
-    Name       = "${var.project_name}-${var.env}-RDS"
+    Name       = "${var.project_name}-${var.env}-${count.index}-RDS"
     Project    = var.project_name
     Enviroment = var.env
 
