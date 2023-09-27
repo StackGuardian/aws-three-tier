@@ -17,24 +17,17 @@ resource "aws_security_group" "rds-sc" {
   }
 }
 
-#Retriving the secrets from the vault 
-data "vault_generic_secret" "database_cred" {
-  #path = "tf-secrets/dev"
-  path = var.rds_master_password[var.env]
-}
-
 #RDS Instances
 resource "aws_db_instance" "rds" {
-  count             = var.create_rds ? 1 : 0
-  identifier        = "${var.project_name}-${var.env}-rds"
-  allocated_storage = var.rds_storage
-  engine            = var.rds_engine
-  engine_version    = var.rds_engine_version
-  instance_class    = var.rds_instance_class
-  db_name           = var.rds_db_name
-  username          = var.rds_master_un
-  #password                 = var.rds_mastser_password
-  password                  = data.vault_generic_secret.database_cred.data.rds_master_password
+  count                     = var.create_rds ? 1 : 0
+  identifier                = "${var.project_name}-${var.env}-rds"
+  allocated_storage         = var.rds_storage
+  engine                    = var.rds_engine
+  engine_version            = var.rds_engine_version
+  instance_class            = var.rds_instance_class
+  db_name                   = var.rds_db_name
+  username                  = var.rds_master_un
+  password                  = var.rds_master_password
   db_subnet_group_name      = aws_db_subnet_group.private-subnet-db.name #For private subnet
   skip_final_snapshot       = false
   final_snapshot_identifier = "${var.project_name}-${var.env}-finalsnapshot"
