@@ -4,16 +4,11 @@ variable "aws_region" {
   description = "AWS region for creating infstructure"
 }
 
-variable "aws_secret_key" {
-  type        = string
-  description = "AWS secret key"
-}
 variable "project_name" {
   default     = "AWS"
   type        = string
   description = "Project Name"
 }
-
 variable "env" {
   type        = string
   description = "Project enviroment"
