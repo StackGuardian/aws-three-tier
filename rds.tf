@@ -30,7 +30,7 @@ resource "aws_db_instance" "rds" {
   password                  = var.rds_master_password
   db_subnet_group_name      = aws_db_subnet_group.private-subnet-db.name #For private subnet
   skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.project_name}-${var.env}-${count.index}finalsnapshot"
+  final_snapshot_identifier = "${var.project_name}-${var.env}-${count.index}-${timestamp()}"
   vpc_security_group_ids    = [aws_security_group.rds-sc.id]
   backup_retention_period   = 15
   maintenance_window        = "sun:00:00-Sun:03:00"
